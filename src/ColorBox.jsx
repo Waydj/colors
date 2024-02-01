@@ -1,10 +1,17 @@
-import './ColorBox.css'
+import "./ColorBox.css";
 
 export const ColorBox = ({ color }) => {
+  const { name, color: background } = color;
+
   return (
-    <div style={{ background: color.color }} className="color-box">
-      <span>{color.name}</span>
-      <span>More</span>
+    <div style={{ background }} className="color-box">
+      <div className="copy-container">
+        <div className="box-content">
+          <span>{name}</span>
+        </div>
+        <button className="copy-button">Copy</button>
+      </div>
+      <span className="see-more">more</span>
     </div>
   );
 };
