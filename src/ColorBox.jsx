@@ -3,7 +3,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import "./ColorBox.css";
 
 export const ColorBox = ({ color }) => {
-  const { name, color: background } = color;
+  const { name, hex: background } = color;
 
   const [copied, setCopied] = useState(false);
 
