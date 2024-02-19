@@ -1,0 +1,37 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.logo {
+  margin-right: 15px;
+  padding: 10px;
+  font-size: 22px;
+  background-color: #eceff1;
+}
+
+.logo a {
+  color: black;
+  text-decoration: none;
+}
+
+.slider {
+  width: 340px;
+  margin: 0 10px;
+  display: inline-block;
+}
+
+.rc-slider {
+  background-color: transparent;
+}
+
+.rc-slider-handle,
+.rc-slider-handle:active,
+.rc-slider-handle:focus,
+.rc-slider-handle:hover {
+  background-color: green;
+  outline: none;
+  border: 2px solid green;
+  box-shadow: none;
+}
