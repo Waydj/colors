@@ -1,8 +1,15 @@
 import Slider from "rc-slider";
+import Select from "react-select";
 import "rc-slider/assets/index.css";
 import "./Navbar.css";
 
-export const Navbar = ({ level, setLevel }) => {
+const options = [
+  { value: "hex", label: "Hex - #ffffff" },
+  { value: "rgb", label: "RGB - rgb(255,255,255)" },
+  { value: "rgba", label: "RGBA - rgba(255,255,255,1)" },
+];
+
+export const Navbar = ({ level, setLevel, changeFormat }) => {
   return (
     <header className="navbar">
       <div className="logo">
@@ -21,6 +28,13 @@ export const Navbar = ({ level, setLevel }) => {
             step={100}
           />
         </div>
+      </div>
+      <div className="select-container">
+        <Select
+          defaultValue={options[0]}
+          onChange={changeFormat}
+          options={options}
+        />
       </div>
     </header>
   );
