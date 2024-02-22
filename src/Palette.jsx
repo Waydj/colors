@@ -22,6 +22,9 @@ export const Palette = ({ palette }) => {
     <div className="palette">
       <Navbar level={level} setLevel={setLevel} changeFormat={changeFormat} />
       <div className="palette-colors">{colorBoxes}</div>
+      <footer className="palette-footer">
+        {palette.paletteName} <span className="emoji">{palette.emoji}</span>{" "}
+      </footer>
       <ToastContainer
         autoClose={3000}
         theme="colored"
