@@ -17,7 +17,7 @@ const RouteComponent = () => {
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<PaletteList />} />
+      <Route path="/" element={<PaletteList palettes={seedColors} />} />
       <Route path="/palette/:id" element={<RouteComponent />} />
     </Routes>
   );
