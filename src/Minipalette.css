@@ -1,0 +1,30 @@
+.root {
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.colors {
+  width: 100%;
+  height: 150px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #222;
+}
+
+.emoji {
+  margin: 0 1px;
+  font-size: 25px;
+}
