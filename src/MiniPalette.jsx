@@ -8,10 +8,10 @@ export const MiniPalette = ({ palette }) => {
   }
 
   return (
-    <div className="root">
-      <div className="colors">
-        <h5 className="title">
-          {palette.paletteName} <span className="emoji">{palette.emoji}</span>
+    <div className="mini-palette">
+      <div className="mini-palette-colors">
+        <h5 className="mini-palette-title">
+          {palette.paletteName} <span className="mini-palette-emoji">{palette.emoji}</span>
         </h5>
       </div>
     </div>
