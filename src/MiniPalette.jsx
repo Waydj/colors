@@ -1,12 +1,12 @@
 import "./MiniPalette.css";
 
-export const MiniPalette = ({ palette }) => {
+export const MiniPalette = ({ palette, handleClick }) => {
   if (!palette) {
     return null;
   }
 
   return (
-    <div className="mini-palette">
+    <div className="mini-palette" onClick={() => handleClick(palette.id)}>
       <div className="mini-palette-colors">
         {palette.colors.map((color) => (
           <div

@@ -1,8 +1,12 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MiniPalette } from "./MiniPalette";
 import "./PaletteList.css";
 
 export const PaletteList = ({ palettes }) => {
+  const navigate = useNavigate();
+
+  const goToPalette = (id) => navigate(`/palette/${id}`);
+
   return (
     <div className="palette-list">
       <div className="palette-list-container">
@@ -11,10 +15,11 @@ export const PaletteList = ({ palettes }) => {
         </nav>
         <div className="palettes-list">
           {palettes.map((palette) => (
-            <MiniPalette key={palette.id} palette={palette} />
-            // <p key={palette.id}>
-            //   <Link to={`/palette/${palette.id}`}>{palette.paletteName}</Link>
-            // </p>
+            <MiniPalette
+              key={palette.id}
+              palette={palette}
+              handleClick={goToPalette}
+            />
           ))}
         </div>
       </div>
