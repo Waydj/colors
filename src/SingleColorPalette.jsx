@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ColorBox } from "./ColorBox";
 import { Navbar } from "./Navbar";
@@ -37,9 +38,16 @@ export const SingleColorPalette = ({ palette, color }) => {
   ));
 
   return (
-    <div className="palette">
+    <div className="single-color-palette palette">
       <Navbar changeFormat={changeFormat} noShowingAllColors={true} />
-      <div className="palette-colors">{colorBoxes}</div>
+      <div className="palette-colors">
+        {colorBoxes}
+        <div className="go-back color-box">
+          <Link to={`/palette/${palette.id}`} className="back-button">
+            Go back
+          </Link>
+        </div>
+      </div>
       <Footer palette={palette} />
     </div>
   );

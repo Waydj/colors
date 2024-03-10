@@ -8,6 +8,14 @@
   margin-bottom: -3.5px;
 }
 
+.single-color-palette .color-box {
+  height: 50%;
+}
+
+.go-back.color-box {
+  background-color: black;
+}
+
 .box-content {
   position: absolute;
   width: 100%;
@@ -20,7 +28,8 @@
   font-size: 12px;
 }
 
-.copy-button {
+.copy-button,
+.back-button {
   width: 100px;
   height: 30px;
   position: absolute;
@@ -37,6 +46,9 @@
   color: white;
   border: none;
   text-transform: uppercase;
+}
+
+.copy-button {
   opacity: 0;
 }
 
