@@ -1,8 +1,9 @@
 import { Route, Routes, useParams } from "react-router-dom";
 import { PaletteList } from "./PaletteList";
 import { Palette } from "./Palette";
-import seedColors from "./seedColors";
+import { SingleColorPalette } from "./SingleColorPalette";
 import { generatePalette } from "./colorHelpers";
+import seedColors from "./seedColors";
 
 const RouteComponent = () => {
   const params = useParams();
@@ -19,6 +20,10 @@ const App = () => {
     <Routes>
       <Route path="/" element={<PaletteList palettes={seedColors} />} />
       <Route path="/palette/:id" element={<RouteComponent />} />
+      <Route
+        path="/palette/:paletteId/:colorId"
+        element={<SingleColorPalette />}
+      />
     </Routes>
   );
 };
