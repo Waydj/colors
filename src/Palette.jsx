@@ -4,6 +4,7 @@ import { ColorBox } from "./ColorBox";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Palette.css";
+import { Footer } from "./Footer";
 
 export const Palette = ({ palette }) => {
   const [level, setLevel] = useState(500);
@@ -22,9 +23,7 @@ export const Palette = ({ palette }) => {
     <div className="palette">
       <Navbar level={level} setLevel={setLevel} changeFormat={changeFormat} />
       <div className="palette-colors">{colorBoxes}</div>
-      <footer className="palette-footer">
-        {palette.paletteName} <span className="emoji">{palette.emoji}</span>{" "}
-      </footer>
+      <Footer palette={palette} />
       <ToastContainer
         autoClose={3000}
         theme="colored"
