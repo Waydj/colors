@@ -17,7 +17,12 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
   padding: 20px 0;
+  color: white;
+}
+
+.palette-list-nav a {
   color: white;
 }
 
