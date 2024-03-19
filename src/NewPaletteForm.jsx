@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiAppBar from "@mui/material/AppBar";
@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import { ChromePicker } from "react-color";
 import { Button } from "@mui/material";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { DraggableColorBox } from "./DraggableColorBox";
 
 const drawerWidth = 400;
@@ -64,11 +65,21 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export const NewPaletteForm = () => {
   const [open, setOpen] = useState(false);
-  const [currentColor, setCurrentColor] = useState("black");
-  const [colors, setColors] = useState(["black", "yellow"]);
+  const [currentColor, setCurrentColor] = useState({ hex: "ffffff" });
+  const [colors, setColors] = useState([]);
+  const [newName, setNewName] = useState("");
 
   const addColor = () => {
-    setColors((prev) => [...prev, currentColor.hex]);
+    const newColor = {
+      name: newName,
+      color: currentColor.hex,
+    };
+    setColors((prev) => [...prev, newColor]);
+    setNewName("");
+  };
+
+  const changeNewName = (e) => {
+    setNewName(e.target.value);
   };
 
   const handleDrawerOpen = () => {
@@ -78,6 +89,22 @@ export const NewPaletteForm = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    ValidatorForm.addValidationRule("isColorNameUnique", (value) =>
+      colors.every(({ name }) => name.toLowerCase() !== value.toLowerCase())
+    );
+
+    ValidatorForm.addValidationRule("isColorUnique", () =>
+      colors.every(({ color }) => color !== currentColor.hex)
+    );
+
+    return () => {
+      ValidatorForm.removeValidationRule("isColorNameUnique");
+      ValidatorForm.removeValidationRule("isColorUnique");
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newName, currentColor]);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -127,19 +154,35 @@ export const NewPaletteForm = () => {
           </Button>
         </div>
         <ChromePicker color={currentColor} onChange={setCurrentColor} />
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ backgroundColor: currentColor.hex }}
-          onClick={addColor}
-        >
-          Add color
-        </Button>
+        <ValidatorForm onSubmit={addColor}>
+          <TextValidator
+            value={newName}
+            onChange={changeNewName}
+            validators={["required", "isColorNameUnique", "isColorUnique"]}
+            errorMessages={[
+              "this field is required",
+              "Color name must be unique",
+              "Color must be unique",
+            ]}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            style={{ backgroundColor: currentColor.hex }}
+          >
+            Add color
+          </Button>
+        </ValidatorForm>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
         {colors.map((color) => (
-          <DraggableColorBox color={color} key={color} />
+          <DraggableColorBox
+            color={color.color}
+            name={color.name}
+            key={color}
+          />
         ))}
       </Main>
     </Box>

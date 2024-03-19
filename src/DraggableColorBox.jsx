@@ -1,4 +1,4 @@
-export const DraggableColorBox = ({ color }) => {
+export const DraggableColorBox = ({ color, name }) => {
   return (
     <div
       style={{
@@ -12,7 +12,7 @@ export const DraggableColorBox = ({ color }) => {
         marginBottom: "-3.5px",
       }}
     >
-      {color}
+      {name}
     </div>
   );
 };
