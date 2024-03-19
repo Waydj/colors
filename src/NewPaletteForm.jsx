@@ -62,6 +62,12 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export const NewPaletteForm = () => {
   const [open, setOpen] = useState(false);
+  const [currentColor, setCurrentColor] = useState("black");
+  const [colors, setColors] = useState(["black", "yellow"]);
+
+  const addColor = () => {
+    setColors((prev) => [...prev, currentColor.hex]);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -118,13 +124,23 @@ export const NewPaletteForm = () => {
             Random color
           </Button>
         </div>
-        <ChromePicker />
-        <Button variant="contained" color="primary">
+        <ChromePicker color={currentColor} onChange={setCurrentColor} />
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ backgroundColor: currentColor.hex }}
+          onClick={addColor}
+        >
           Add color
         </Button>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
+        <ul>
+          {colors.map((color) => (
+            <li key={color}>{color}</li>
+          ))}
+        </ul>
       </Main>
     </Box>
   );
