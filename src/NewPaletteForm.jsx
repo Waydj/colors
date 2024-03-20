@@ -14,6 +14,7 @@ import { ChromePicker } from "react-color";
 import { Button } from "@mui/material";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { DraggableColorBox } from "./DraggableColorBox";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 400;
 
@@ -63,7 +64,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-export const NewPaletteForm = () => {
+export const NewPaletteForm = ({ savePalette }) => {
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
   const [currentColor, setCurrentColor] = useState({ hex: "ffffff" });
   const [colors, setColors] = useState([]);
@@ -80,6 +83,18 @@ export const NewPaletteForm = () => {
 
   const changeNewName = (e) => {
     setNewName(e.target.value);
+  };
+
+  const onSavePalette = () => {
+    const newName = "New Palette";
+    const newPalette = {
+      paletteName: newName,
+      id: newName.toLowerCase().replace(/ /g, "-"),
+      emoji: "🎨",
+      colors,
+    };
+    savePalette(newPalette);
+    navigate("/");
   };
 
   const handleDrawerOpen = () => {
@@ -109,7 +124,7 @@ export const NewPaletteForm = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} color="default">
         <Toolbar>
           <IconButton
             color="inherit"
@@ -123,6 +138,9 @@ export const NewPaletteForm = () => {
           <Typography variant="h6" noWrap component="div">
             Persistent drawer
           </Typography>
+          <Button variant="contained" color="primary" onClick={onSavePalette}>
+            Save Palette
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
