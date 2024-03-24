@@ -105,6 +105,10 @@ export const NewPaletteForm = ({ savePalette, palettes }) => {
     setOpen(false);
   };
 
+  const handleDeleteColor = (colorName) => {
+    setColors((prev) => prev.filter((color) => color.name !== colorName));
+  };
+
   useEffect(() => {
     ValidatorForm.addValidationRule("isColorNameUnique", (value) =>
       colors.every(({ name }) => name.toLowerCase() !== value.toLowerCase())
@@ -115,7 +119,9 @@ export const NewPaletteForm = ({ savePalette, palettes }) => {
     );
 
     ValidatorForm.addValidationRule("isPaletteNameUnique", (value) =>
-      palettes.every(({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase())
+      palettes.every(
+        ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
+      )
     );
 
     return () => {
@@ -215,6 +221,7 @@ export const NewPaletteForm = ({ savePalette, palettes }) => {
           <DraggableColorBox
             color={color.color}
             name={color.name}
+            handleDelete={() => handleDeleteColor(color.name)}
             key={color}
           />
         ))}

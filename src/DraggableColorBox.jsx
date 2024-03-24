@@ -30,7 +30,7 @@ const StyledBoxContent = styled.div`
   justify-content: space-between;
 `;
 
-export const DraggableColorBox = ({ color, name }) => {
+export const DraggableColorBox = ({ color, name, handleDelete }) => {
   return (
     <StyledBox color={color}>
       <StyledBoxContent>
@@ -38,6 +38,7 @@ export const DraggableColorBox = ({ color, name }) => {
         <DeleteIcon
           color="error"
           style={{ transition: "all 0.3s ease-in-out" }}
+          onClick={handleDelete}
         />
       </StyledBoxContent>
     </StyledBox>
