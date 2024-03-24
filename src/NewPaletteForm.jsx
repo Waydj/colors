@@ -13,8 +13,14 @@ import { styled } from "@mui/material/styles";
 import { ChromePicker } from "react-color";
 import { Button } from "@mui/material";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-import { DraggableColorBox } from "./DraggableColorBox";
 import { useNavigate } from "react-router-dom";
+import { DraggableColorList } from "./DraggableColorList";
+import { DndContext } from "@dnd-kit/core";
+import {
+  SortableContext,
+  arrayMove,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
 
 const drawerWidth = 400;
 
@@ -107,6 +113,19 @@ export const NewPaletteForm = ({ savePalette, palettes }) => {
 
   const handleDeleteColor = (colorName) => {
     setColors((prev) => prev.filter((color) => color.name !== colorName));
+  };
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      setColors((items) => {
+        const oldIndex = over.data.current?.sortable.index;
+        const newIndex = active.data.current?.sortable.index;
+
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
   };
 
   useEffect(() => {
@@ -217,14 +236,17 @@ export const NewPaletteForm = ({ savePalette, palettes }) => {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        {colors.map((color) => (
-          <DraggableColorBox
-            color={color.color}
-            name={color.name}
-            handleDelete={() => handleDeleteColor(color.name)}
-            key={color}
-          />
-        ))}
+        <DndContext onDragEnd={handleDragEnd}>
+          <SortableContext
+            items={colors.map((color) => color.name)}
+            strategy={rectSortingStrategy}
+          >
+            <DraggableColorList
+              colors={colors}
+              handleDeleteColor={handleDeleteColor}
+            />
+          </SortableContext>
+        </DndContext>
       </Main>
     </Box>
   );

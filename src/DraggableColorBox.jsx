@@ -1,5 +1,7 @@
+import { useSortable } from "@dnd-kit/sortable";
 import styled from "@emotion/styled";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { CSS } from "@dnd-kit/utilities";
 
 const StyledBox = styled.div`
   background-color: ${(props) => props.color};
@@ -31,8 +33,22 @@ const StyledBoxContent = styled.div`
 `;
 
 export const DraggableColorBox = ({ color, name, handleDelete }) => {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: name });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
   return (
-    <StyledBox color={color}>
+    <StyledBox
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      style={style}
+      color={color}
+    >
       <StyledBoxContent>
         <span>{name}</span>
         <DeleteIcon
