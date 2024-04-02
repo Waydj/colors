@@ -75,9 +75,12 @@ export const NewPaletteForm = ({ savePalette, palettes }) => {
 
   const [open, setOpen] = useState(false);
   const [currentColor, setCurrentColor] = useState({ hex: "ffffff" });
-  const [colors, setColors] = useState([]);
+  const [colors, setColors] = useState(palettes[0].colors);
   const [newColorName, setNewColorName] = useState("");
   const [newPaletteName, setNewPaletteName] = useState("");
+
+  const maxColors = 20;
+  const paletteIsFull = colors.length >= maxColors;
 
   const addColor = () => {
     const newColor = {
@@ -126,6 +129,26 @@ export const NewPaletteForm = ({ savePalette, palettes }) => {
         return arrayMove(items, oldIndex, newIndex);
       });
     }
+  };
+
+  const clearPalette = () => {
+    setColors([]);
+  };
+
+  const randomColor = () => {
+    const allColors = palettes.map((colors) => colors.colors).flat();
+    let rand;
+    let randomColor;
+    let isDuplicateColor = true;
+    while (isDuplicateColor) {
+      rand = Math.floor(Math.random() * allColors.length);
+      randomColor = allColors[rand];
+      isDuplicateColor = colors.some(
+        (color) => color.name === randomColor.name
+      );
+    }
+    setCurrentColor({ hex: randomColor.color });
+    setNewColorName(randomColor.name);
   };
 
   useEffect(() => {
@@ -205,10 +228,15 @@ export const NewPaletteForm = ({ savePalette, palettes }) => {
         <Divider />
         <Typography variant="h4">Design your palette</Typography>
         <div>
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onClick={clearPalette}>
             Clear palette
           </Button>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={randomColor}
+            disabled={paletteIsFull}
+          >
             Random color
           </Button>
         </div>
@@ -228,9 +256,12 @@ export const NewPaletteForm = ({ savePalette, palettes }) => {
             type="submit"
             variant="contained"
             color="primary"
-            style={{ backgroundColor: currentColor.hex }}
+            style={{
+              backgroundColor: paletteIsFull ? "grey" : currentColor.hex,
+            }}
+            disabled={paletteIsFull}
           >
-            Add color
+            {paletteIsFull ? "Palette is full" : "Add color to palette"}
           </Button>
         </ValidatorForm>
       </Drawer>
