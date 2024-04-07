@@ -51,6 +51,22 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
+const Container = styled("div")(() => ({
+  width: "90%",
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "10px",
+}));
+
+const Buttons = styled("div")(() => ({
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+}));
+
 export const NewPaletteForm = ({ savePalette, palettes }) => {
   const navigate = useNavigate();
 
@@ -178,28 +194,34 @@ export const NewPaletteForm = ({ savePalette, palettes }) => {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Typography variant="h4">Design your palette</Typography>
-        <div>
-          <Button variant="contained" color="secondary" onClick={clearPalette}>
-            Clear palette
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={randomColor}
-            disabled={paletteIsFull}
-          >
-            Random color
-          </Button>
-        </div>
-        <ColorPickerForm
-          addColor={addColor}
-          currentColor={currentColor}
-          setCurrentColor={setCurrentColor}
-          newColorName={newColorName}
-          changeNewName={changeNewName}
-          paletteIsFull={paletteIsFull}
-        />
+        <Container>
+          <Typography variant="h4">Design your palette</Typography>
+          <Buttons>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={clearPalette}
+            >
+              Clear palette
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={randomColor}
+              disabled={paletteIsFull}
+            >
+              Random color
+            </Button>
+          </Buttons>
+          <ColorPickerForm
+            addColor={addColor}
+            currentColor={currentColor}
+            setCurrentColor={setCurrentColor}
+            newColorName={newColorName}
+            changeNewName={changeNewName}
+            paletteIsFull={paletteIsFull}
+          />
+        </Container>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

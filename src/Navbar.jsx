@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Slider from "rc-slider";
 import Select from "react-select";
 import "rc-slider/assets/index.css";
@@ -18,9 +19,9 @@ export const Navbar = ({
   return (
     <header className="navbar">
       <div className="logo">
-        <a href="/">
+        <Link to="/">
           <h1>React Colors</h1>
-        </a>
+        </Link>
       </div>
       {!noShowingAllColors && (
         <div className="slider-container">
