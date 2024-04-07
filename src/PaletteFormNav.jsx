@@ -5,15 +5,19 @@ import MuiAppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
+import { styled as muiStyled } from "@mui/material/styles";
+import styled from "@emotion/styled";
 import { Button } from "@mui/material";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 const drawerWidth = 400;
 
-const AppBar = styled(MuiAppBar, {
+const AppBar = muiStyled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
   transition: theme.transitions.create(["margin", "width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -27,6 +31,12 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
+
+const NavBtns = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
 export const PaletteFormNav = ({
   palettes,
@@ -66,6 +76,8 @@ export const PaletteFormNav = ({
         <Typography variant="h6" noWrap component="div">
           Persistent drawer
         </Typography>
+      </Toolbar>
+      <NavBtns>
         <ValidatorForm onSubmit={onSavePalette}>
           <TextValidator
             value={newPaletteName}
@@ -79,15 +91,15 @@ export const PaletteFormNav = ({
           <Button type="submit" variant="contained" color="primary">
             Save Palette
           </Button>
-          <Button
-            onClick={() => navigate(-1)}
-            variant="contained"
-            color="secondary"
-          >
-            Go Back
-          </Button>
         </ValidatorForm>
-      </Toolbar>
+        <Button
+          onClick={() => navigate(-1)}
+          variant="contained"
+          color="secondary"
+        >
+          Go Back
+        </Button>
+      </NavBtns>
     </AppBar>
   );
 };
