@@ -7,9 +7,8 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-import { ChromePicker } from "react-color";
 import { Button } from "@mui/material";
-import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { ValidatorForm } from "react-material-ui-form-validator";
 import { useNavigate } from "react-router-dom";
 import { DraggableColorList } from "./DraggableColorList";
 import { DndContext } from "@dnd-kit/core";
@@ -19,6 +18,7 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { PaletteFormNav } from "./PaletteFormNav";
+import { ColorPickerForm } from "./ColorPickerForm";
 
 const drawerWidth = 400;
 
@@ -192,30 +192,14 @@ export const NewPaletteForm = ({ savePalette, palettes }) => {
             Random color
           </Button>
         </div>
-        <ChromePicker color={currentColor} onChange={setCurrentColor} />
-        <ValidatorForm onSubmit={addColor}>
-          <TextValidator
-            value={newColorName}
-            onChange={changeNewName}
-            validators={["required", "isColorNameUnique", "isColorUnique"]}
-            errorMessages={[
-              "this field is required",
-              "Color name must be unique",
-              "Color must be unique",
-            ]}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            style={{
-              backgroundColor: paletteIsFull ? "grey" : currentColor.hex,
-            }}
-            disabled={paletteIsFull}
-          >
-            {paletteIsFull ? "Palette is full" : "Add color to palette"}
-          </Button>
-        </ValidatorForm>
+        <ColorPickerForm
+          addColor={addColor}
+          currentColor={currentColor}
+          setCurrentColor={setCurrentColor}
+          newColorName={newColorName}
+          changeNewName={changeNewName}
+          paletteIsFull={paletteIsFull}
+        />
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
